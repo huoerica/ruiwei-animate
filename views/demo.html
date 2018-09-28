@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../assets/css/animate.min.css">
+
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../assets/js/catalog.js"></script>
+    <script src="../assets/js/angular.min.js"></script>
+    <style>
+        body{overflow-x: hidden;}
+        .b{height: 500px; background: #ccc; margin: 50px;}
+        .a{height: 100px; background: #ff0000; margin: 50px;}
+        .box{ height: 200px; position: relative;}
+        .box .left{ width: 40%; height: 200px; background: red; position: absolute; top: 0; left: 5%;}
+        .box .right{ width: 40%; height: 200px; background: blue; position: absolute; top: 0; right: 5%;}
+
+    </style>
+</head>
+<body ng-app="app" ng-controller="appCtrl" ng-cloak>
+
+<a onclick="setLanguageCode('SCN')">简中</a>
+<a onclick="setLanguageCode('TCN')">繁中</a>
+<a onclick="setLanguageCode('EN')">EN</a>
+
+<span>{{catalog.index}}</span>
+
+<div >
+    <div class="tabs-nav">
+        <a href="#one" class="active" data-nav="rwtabs">标签1</a>
+        <a href="#two" data-nav="rwtabs">标签2</a>
+    </div>
+    <div class="tabs-panel">
+        <div class="panel active" id="one">1212</div>
+        <div class="panel" id="two">748789465</div>
+    </div>
+</div>
+
+<div class="b"></div>
+<div class="box" id="a1">
+    <div class="left" data-rw="animate" data-animate="bounceInLeft" data-duration="1s" data-delay="0.3s"></div>
+    <div class="right" data-rw="animate" data-animate="bounceInUp" data-duration="1.5s"></div>
+</div>
+<div class="b"></div>
+
+
+
+<script>
+    if($.browser.msie && $.browser.version < 10){
+        alert('浏览器版本太低');
+    }
+
+    (function ($) {
+        // el:元素，callback，要执行的回调，enter_distance:进入可视区域 *px后执行回调
+        function show_animate(el,config) {
+            var evt = {};
+            evt.el = el;
+
+            config = $.extend({
+                enter:function () {},
+                out:function () {},
+                enter_distance: 0,
+                out_distance: 0
+            }, config);
+
+            evt.enter = config.enter;
+            evt.out = config.out;
+            evt.enter_distance = config.enter_distance;
+            evt.out_distance = config.out_distance;
+
+            if(!evt.el){
+                throw "el is undefined, show_animate(el,config)";
+            }
+            if($(evt.el).length == 0){
+                console.warn("Cannot find el:" + evt.el);
+                return;
+            }
+
+            var win_height = $(window).height();
+            var win_scroll_top;
+            var el_top = $(evt.el).offset().top;
+            var el_height = $(evt.el).outerHeight();
+
+            var animate_init = function () {
+                win_scroll_top = $(window).scrollTop();
+
+                var enter_bl = win_scroll_top + win_height >= el_top + evt.enter_distance;
+                var out_bl = win_scroll_top + evt.out_distance >= el_height + el_top;
+                var init_in = win_height > el_top + el_height;
+
+                // 进入
+                if(enter_bl && !out_bl && win_scroll_top >0){
+                    evt.enter(evt);
+                }
+                // 初始化进入
+                if(init_in){
+                    evt.enter(evt);
+                }
+                // 离开
+                if(out_bl){
+                    evt.out(evt);
+                }
+            };
+            animate_init();
+            $(window).on("scroll", function () {
+                animate_init();
+            });
+
+            $(window).on("resize", function () {
+                win_height = $(window).height();
+                el_top = $(evt.el).offset().top;
+                el_height = $(evt.el).outerHeight();
+            });
+        }
+        //
+        $(function () {
+            $.each($("[data-rw='animate']"), function (i, v) {
+                show_animate(v,{
+                    enter: function (evt) {
+                        var el = $(evt.el);
+                        el.addClass(el.data("animate") + ' animated');
+                        var css = {
+                            'animation-duration': el.data("duration"),
+                            '-webkit-animation-duration': el.data("duration"),
+                            'animation-delay': el.data("delay"),
+                            '-webkit-animation-delay': el.data("delay")
+                        };
+                        el.css(css);
+                    }
+                });
+            });
+        })
+    })(jQuery);
+</script>
+<script>
+    function setCookie(c_name,value,expiredays){
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate()+expiredays);
+        document.cookie = c_name+ "=" + escape(value) +
+            ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+    }
+    function getCookie(c_name){
+        if (document.cookie.length>0){
+            var c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start!=-1){
+                c_start = c_start + c_name.length+1;
+                var c_end = document.cookie.indexOf(";",c_start);
+                if ( c_end == -1) c_end=document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end))
+            }
+        }
+        return 'EN';
+    }
+
+    function setLanguageCode(type) {
+        var lgs = ['SCN','EN','TCN'];
+        if(!type || lgs.indexOf(type) < 0){
+            type = 'SCN';
+        }
+        setCookie('realway_lg',type,7);
+        window.location.reload();
+    }
+    function getLanguageCode() {
+        return getCookie("realway_lg");
+    }
+
+
+
+
+    var app = angular.module("app",[]);
+    app.controller("appCtrl", function ($scope) {
+        var lg = getLanguageCode();
+        $scope.catalog = catalog[lg];
+        console.log($scope.catalog)
+
+
+    });
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>业务概览</title>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/animate.min.css">
+
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/angular.min.js"></script>
+    <script src="../assets/js/angular-sanitize.min.js"></script>
+    <script src="../assets/js/commonApp.js"></script>
+    <script src="../assets/js/catalog.js"></script>
+
+    <script>
+        bodyApp = angular.module('bodyapp', ['commonApp', 'ngSanitize']);
+    </script>
+</head>
+<body ng-app="bodyapp" ng-cloak>
+<nav ng-controller="headerCtrl" class="navbar navbar-inverse navbar-fixed-top site-navbar">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="./"><img src="../assets/img/logo.png"/></a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="">{{catalog.index}}</a></li>
+            <li><a href="">{{catalog.aboutus}}</a></li>
+            <li><a href="">{{catalog.business}}</a></li>
+            <li><a href="">{{catalog.investor}}</a></li>
+            <li><a href="">{{catalog.crm}}</a></li>
+            <li><a href="">{{catalog.media}}</a></li>
+            <li><a href="">{{catalog.employ}}</a></li>
+            <li><a href="">{{catalog.contact}}</a></li>
+        </ul>
+    </div>
+    <div class="navbar-language">
+        <span ng-class="{'active':language=='EN'}" ng-click="witchLanguage('EN')">EN</span>
+        <span ng-class="{'active':language=='SCN'}" ng-click="witchLanguage('SCN')">简</span>
+        <span ng-class="{'active':language=='TCN'}" ng-click="witchLanguage('TCN')">繁</span>
+    </div>
+</nav>
+<div class="body-wrapper" ng-controller="wrapperCtrl">
+    <div class="banner-container">
+        <img src="../assets/img/investor_bn.png"/>
+    </div>
+    <div class="tabs-container business-cont" id="tabsCont">
+        <div class="tabs-nav">
+            <a href="javascript:;" data-href="#one" class="nav-item active">{{catalog.layout}}</a>
+            <a href="javascript:;" data-href="#two" class="nav-item">{{catalog.distribution}}</a>
+        </div>
+        <div class="tabs-panel">
+            <div class="tab-panel tab-panel-1 active" data-role="one">
+                <!--产业布局-->
+                <div class="layout-tab">
+                    <div class="clearfix">
+                        <h3 class="tit1">{{catalog.layoutdetail.title}}</h3>
+                        <div class="desc-box" ng-bind-html="catalog.layoutdetail.content">
+                        </div>
+                    </div>
+                    <!--图文项目-->
+                    <div class="pro-box">
+                        <h4 class="tit2">{{catalog.layoutdetail.title12}}</h4>
+                        <div class="wrap-box">
+                            <div class="wrap clearfix" ng-repeat="pro in catalog.layoutdetail.project1">
+                                <div class="img-box" data-rw="animate" data-animate="fadeInLeft" data-duration="1s"
+                                     data-delay="0.{{$index+1}}s">
+                                    <img ng-src="../assets/img/business-{{$index+1}}.png" class="img-responsive">
+                                </div>
+                                <div class="txt-box" data-rw="animate" data-animate="fadeInRight" data-duration="1s"
+                                     data-delay="0.{{$index+1}}s">
+                                    <h4 class="wrap-tit">{{pro.title}}</h4>
+                                    <p>{{pro.desc}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--块文字项目-->
+                    <div class="desc-box">
+                        <div class="desc-item" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.{{$index+1}}s"
+                             ng-repeat="item in catalog.layoutdetail.project2">
+                            <p class="tit">{{item.title}}</p>
+                            <div class="desc">{{item.desc}}</div>
+                            <div class="clearfix">
+                                <div class="lb">相关项目：</div>
+                                <div class="links">
+                                    <span ng-repeat="link in item.list">{{link}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-panel" data-role="two">
+                <!--业务分布-->
+                <div class="distribute-tab">
+                    <h4 class="tit">{{catalog.distrydetail.title}}</h4>
+                    <div class="img-box">
+                        <img src="../assets/img/map-china.png" class="img-responsive">
+                    </div>
+                    <div class="lbs-box"  data-rw="animate" data-animate="fadeInLeft" data-duration="1s" data-delay="0s">
+                        <div>{{catalog.distrydetail.map[0]}}</div>
+                        <div>{{catalog.distrydetail.map[1]}}</div>
+                    </div>
+                    <div class="text-box" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0s"
+                         ng-bind-html="catalog.distrydetail.content">
+                        <!---->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" ng-controller="footerCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 footer__item--other">
+                <img src="../assets/img/logo.png"/>
+                <p>
+                    关联子公司：<a href="/privacy.html" class="footer__list-link">Privacy Policy</a>
+                </p>
+            </div>
+            <div class="col-lg-10 col-md-9  col-sm-12 footer-nav">
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.index}}</h3>
+                    <ul class="footer__list">
+                        <li class="footer__list-item">
+                            <a href="/product/" class="footer__list-link">{{catalog.index}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.aboutus}}</h3>
+                    <ul class="footer__list">
+                        <li class="footer__list-item">
+                            <a href="/integrations/" class="footer__list-link">{{catalog.enterprise}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="/slack" class="footer__list-link">{{catalog.develop}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="/customers/" class="footer__list-link">{{catalog.team}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.business}}</h3>
+                    <ul class="footer__list">
+                        <li class="footer__list-item">
+                            <a href="/case-studies/" class="footer__list-link">{{catalog.layout}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="/pricing/" class="footer__list-link">{{catalog.distribution}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.investor}}</h3>
+                    <ul class="footer__list">
+
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.message}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.notice}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.report}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.film}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.govern}}</a>
+                        </li>
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.prospectus}}</a>
+                        </li>
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.search}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.crm}} </h3>
+                    <ul class="footer__list">
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.crm}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.media}}</h3>
+                    <ul class="footer__list">
+                        <li class="footer__list-item">
+                            <a href="/case-studies/" class="footer__list-link">{{catalog.video}}</a>
+                        </li>
+
+                        <li class="footer__list-item">
+                            <a href="/pricing/" class="footer__list-link">{{catalog.mediaq}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.employ}}</h3>
+                    <ul class="footer__list">
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.employ}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <h3 class="footer__title">{{catalog.contact}}</h3>
+                    <ul class="footer__list">
+                        <li class="footer__list-item">
+                            <a href="" class="footer__list-link">{{catalog.general}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer__copy">Copyright © 2013 - 3018 瑞威资本 沪ICP备12613926号-1 上海瑞威资本</div>
+    </div>
+</footer>
+</body>
+<script>
+    bodyApp.controller("headerCtrl", function ($scope, $rootScope) {
+        console.log("header controller");
+
+        //点击切换语言
+        $scope.witchLanguage = function (code) {
+            $rootScope.initLanguage(code);
+            setCookie("language", code, 7);
+        };
+    });
+    bodyApp.controller("wrapperCtrl", function ($scope, $rootScope) {
+        console.log("wrapper controller");
+
+        $(function () {
+            $("#tabsCont").tabinit();
+        })
+
+    });
+
+    bodyApp.controller("footerCtrl", function ($scope, $rootScope) {
+        console.log("footer controller");
+    });
+</script>
+</html>
