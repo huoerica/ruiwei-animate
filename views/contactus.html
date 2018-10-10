@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>联系我们</title>
+    <link rel="shortcut icon" href="../assets/img/ico.png"/>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/animate.min.css">
 
@@ -16,16 +17,17 @@
     <script src="../assets/js/angular-sanitize.min.js"></script>
     <script src="../assets/js/commonApp.js"></script>
     <script src="../assets/js/catalog.js"></script>
-    <!--地图-->
-    <script type="text/javascript" src="//api.map.baidu.com/api?ak=E4805d16520de693a3fe707cdc962045&type=lite&v=1.0"></script>
+    <script src="../assets/js/jquery.aniview.js"></script>
 
+    <!--地图-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=E4805d16520de693a3fe707cdc962045"></script>
 
     <script>
         bodyApp = angular.module('bodyapp', ['commonApp','ngSanitize']);
     </script>
 </head>
-<body ng-app="bodyapp" ng-cloak>
-<nav ng-controller="headerCtrl" class="navbar navbar-inverse navbar-fixed-top site-navbar">
+<body ng-app="bodyapp">
+<nav ng-controller="headerCtrl" ng-cloak class="navbar navbar-inverse navbar-fixed-top site-navbar">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -37,14 +39,14 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="">{{catalog.index}}</a></li>
-            <li><a href="">{{catalog.aboutus}}</a></li>
-            <li><a href="">{{catalog.business}}</a></li>
-            <li><a href="">{{catalog.investor}}</a></li>
+            <li><a href="index.html">{{catalog.index}}</a></li>
+            <li><a href="aboutus.html">{{catalog.aboutus}}</a></li>
+            <li><a href="businessoverview.html">{{catalog.business}}</a></li>
+            <li><a href="investorrelation.html">{{catalog.investor}}</a></li>
             <li><a href="">{{catalog.crm}}</a></li>
-            <li><a href="">{{catalog.media}}</a></li>
-            <li><a href="">{{catalog.employ}}</a></li>
-            <li class="active"><a href="">{{catalog.contact}}</a></li>
+            <li><a href="media.html">{{catalog.media}}</a></li>
+            <li><a href="job.html">{{catalog.employ}}</a></li>
+            <li class="active"><a href="contactus.html">{{catalog.contact}}</a></li>
         </ul>
     </div>
     <div class="navbar-language">
@@ -53,15 +55,15 @@
         <span ng-class="{'active':language=='TCN'}" ng-click="witchLanguage('TCN')">繁</span>
     </div>
 </nav>
-<div class="body-wrapper" ng-controller="wrapperCtrl">
+<div class="body-wrapper" ng-controller="wrapperCtrl" ng-cloak>
     <div class="banner-container">
-        <img src="../assets/img/investor_bn.png"/>
+        <img src="../assets/img/banner6.jpg"/>
     </div>
 
     <div class="contact-container">
         <div class="row contact-address" id="contactAddr">
             <div class="col-sm-12 col-md-6" data-rw="animate" data-animate="fadeInLeft" data-duration="1s" data-delay="0s">
-                <div id="map" class="contact-map row" style="height: 420px;"></div>
+                <div id="map" class="contact-map row" style="height: 380px;"></div>
             </div>
             <div class="col-sm-12 col-md-6" data-rw="animate" data-animate="fadeInRight" data-duration="1s" data-delay="0s">
                 <div class="company-info">
@@ -71,7 +73,7 @@
                             <div class="col-xs-12"><span class="item light-grey">{{catalog.company.detail[0].key}}</span>{{catalog.company.detail[0].value}}</div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-5" ng-class="{'col-xs-7': $index%2!=0,'col-xs-5': $index%2==0}" ng-repeat="item in catalog.company.detail|startFrom:1">
+                            <div class="col-xs-12" ng-class="{'col-sm-7 col-lg-7': $index%2!=0, 'col-sm-5': ($index%2==0 && $index!=4),'col-sm-12':$index==4}" ng-repeat="item in catalog.company.detail|startFrom:1">
                                 <span class="item light-grey">{{item.key}}</span>{{item.value}}
                             </div>
                         </div>
@@ -93,16 +95,17 @@
     </div>
 
 </div>
-<footer class="footer" ng-controller="footerCtrl">
+<footer class="footer" ng-controller="footerCtrl" ng-cloak>
     <div class="container">
         <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 footer__item--other">
-                <img src="../assets/img/logo.png"/>
-                <p>
-                    关联子公司：<a href="/privacy.html" class="footer__list-link">Privacy Policy</a>
-                </p>
+            <div class="col-md-3 col-sm-4 col-xs-12 footer__item--other text-center" ng-class="{'col-lg-3':language!='EN'}">
+                <img src="../assets/img/logo-foot.png"/>
+                <div class="footer_child">
+                    <p>关联子公司：</p>
+                    <a href="https://www.jsrxfund.com/" target="_blank"><img src="../assets/img/childcomp.png" /></a>
+                </div>
             </div>
-            <div class="col-lg-10 col-md-9  col-sm-12 footer-nav">
+            <div class="col-md-9 col-sm-12 footer-nav" ng-class="{'col-lg-8':language!='EN'}">
                 <div class="footer__item">
                     <h3 class="footer__title">{{catalog.index}}</h3>
                     <ul class="footer__list">
@@ -214,6 +217,13 @@
 </footer>
 </body>
 <script>
+    $(function () {
+        var options = {
+            animateThreshold: 0,
+            scrollPollInterval: 20
+        };
+        $('[data-rw="animate"]').AniView(options);
+    });
     bodyApp.controller("headerCtrl", function ($scope, $rootScope) {
         console.log("header controller");
         document.title = $rootScope.catalog.contact;
@@ -229,12 +239,17 @@
 
         //地图初始化
         var map = new BMap.Map("map");
-        map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
-        //初始化控件
-        var zoomCtrl = new BMap.ZoomControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, offset: new BMap.Size(20, 20)});
-        var scaleCtrl = new BMap.ScaleControl();
-        map.addControl(zoomCtrl);
-        map.addControl(scaleCtrl);
+        map.centerAndZoom(new BMap.Point(121.416772,31.177868), 16);
+        map.enableScrollWheelZoom(true);
+        // map.enableDragging();
+        setTimeout(function(){
+            map.setZoom(20);
+        }, 1500);  //2秒后放大到14级
+
+        var new_point = new BMap.Point(121.416772,31.177868);
+        var marker = new BMap.Marker(new_point);  // 创建标注
+        map.addOverlay(marker);              // 将标注添加到地图中
+        map.panTo(new_point);
     });
 
     bodyApp.controller("footerCtrl", function ($scope, $rootScope) {

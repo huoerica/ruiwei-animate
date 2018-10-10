@@ -4,26 +4,15 @@ function setWrapper() {
     var header = $('.site-navbar').length > 0 ? $('.site-navbar').outerHeight(true) : 0;
     var footer = $('footer').length > 0 ? $('footer').outerHeight(true) : 0;
     $('body>.body-wrapper').css({
-        minHeight: winH - (header + footer),
-        marginTop: header
+        minHeight: winH - footer,
+        paddingTop: header
     })
 }
 //企业概况图片高度
 function equalHeight(node) {
-    // var h = $(node).height();
-    $(node).parent().children("div").css({height: $(node).parent().outerHeight(true) + "px"});
-    // $(node).siblings().css({height: $(node).outerHeight(true) + "px"});
+    var h = $(node).height();console.log(h);
+    $(node).parent().children("div").css({height: $(node).outerHeight(true) + "px"});
 }
-$(function () {
-    setWrapper();
-    equalHeight("#view-img>img");
-});
-$(window).resize(function () {
-    winH = $(window).height();
-    setWrapper();
-    equalHeight("#view-img>img");
-});
-
 //设置cookie
 function setCookie(c_name, value, expiredays) {
     var exdate = new Date();
@@ -31,7 +20,6 @@ function setCookie(c_name, value, expiredays) {
     document.cookie = c_name + '=' + escape(value) +
         ((expiredays == null) ? '' : ';expires=' + exdate.toGMTString());
 }
-
 //获取cookie
 function getCookie(c_name) {
     if (document.cookie.length > 0) {
@@ -45,245 +33,120 @@ function getCookie(c_name) {
     }
     return 'SCN';
 }
+//tabs切换页
+var tabs_slide = function () {
+    var offset = {start: null,end : 0, left: 0, result: 0};
+    var tabs_nav_width = 0, win_width = $(window).width();
+    var $width = $(".tabs-container .tabs-nav-inner").outerWidth(); // 前提，页面只有一个有效的tab组件
 
-// el:元素，callback，要执行的回调，enter_distance:进入可视区域 *px后执行回调
-function show_animate(el, config) {
-    var evt = {};
-    evt.el = el;
+    // 如果tabs的宽度比屏幕窄
+    if($width <= win_width){
+        $(".tabs-container .tabs-nav-inner").css('left',(win_width - $width)/2 + 'px');
+    }else{
+        // 滑动
+        $(".tabs-container .tabs-nav-inner").on("touchstart mousedown", function (e) {
+            var that = $(this); tabs_nav_width = that.outerWidth();
+            offset.left = that.offset().left;
+            var evt = e || window.event;
+            if(evt.type == 'touchstart' && evt.touches.length == 1){
+                offset.start = evt.touches[0].clientX;
+            }else{
+                offset.start = evt.clientX;
+            }
+        });
 
-    config = $.extend({
-        enter: function () {
-        },
-        out: function () {
-        },
-        enter_distance: 0,
-        out_distance: 0
-    }, config);
+        // end > start 则后移
+        $(".tabs-container .tabs-nav-inner").on("touchmove mousemove", function (e) {
+            if(offset.start == null){return false;}
+            var that = $(this);
+            var evt = e || window.event;
+            if(evt.type == 'touchmove' && evt.touches.length == 1){
+                offset.end = evt.touches[0].clientX;
+            }
+            if(evt.type == 'mousemove'){
+                offset.end = evt.clientX;
+            }
+            offset.result = offset.left + offset.end - offset.start;
+            offset.result = offset.result >= 0 ? 0 : (-offset.result >= tabs_nav_width - win_width ? -(tabs_nav_width - win_width) : offset.result);
 
-    evt.enter = config.enter;
-    evt.out = config.out;
-    evt.enter_distance = config.enter_distance;
-    evt.out_distance = config.out_distance;
+            that.css("left", offset.result +"px");
+        });
 
-    if (!evt.el) {
-        throw "el is undefined, show_animate(el,config)";
+        $(".tabs-container .tabs-nav-inner").on("touchend mouseup", function (e) {
+            offset.start = null;
+        });
     }
-    if ($(evt.el).length == 0) {
-        console.warn("Cannot find el:" + evt.el);
-        return;
-    }
+};
 
-    var win_height = $(window).height();
-    var win_scroll_top;
-    var el_top = $(evt.el).offset().top;
-    var el_height = $(evt.el).outerHeight();
+$(function () {
+    setWrapper();
+    equalHeight("#view-img>img");
 
-    var animate_init = function () {
-        win_scroll_top = $(window).scrollTop();
-
-        var enter_bl = win_scroll_top + win_height >= el_top + evt.enter_distance;
-        var out_bl = win_scroll_top + evt.out_distance >= el_height + el_top;
-        var init_in = win_height > el_top + el_height;
-
-        // 进入
-        if (enter_bl && !out_bl && win_scroll_top > 0) {
-            evt.enter(evt);
+    // 滚动加阴影
+    var ban_height = $(".banner-container").outerHeight() || 20;
+    $(window).on("scroll", function () {
+        if($(window).scrollTop() >= ban_height){
+            $("nav.navbar-inverse").addClass("box-shadow");
+        }else{
+            $("nav.navbar-inverse").removeClass("box-shadow");
         }
-        // 初始化进入
-        if (init_in) {
-            evt.enter(evt);
-        }
-        // 离开
-        if (out_bl) {
-            evt.out(evt);
+    });
+
+    //tabs切换页
+    tabs_slide();
+    // $(".tabs-panel").height($(".tab-panel.active").outerHeight());
+    // tabs.active滑动到正中间
+    var tabs_position = function (tab) {
+        var this_left = tab.offset().left,
+            this_width = tab.outerWidth(),
+            win_width = $(window).width(),
+            tas_width = tab.parent().outerWidth();
+
+        if(this_width/2 + this_left != win_width/2 && tas_width >= win_width){
+            var offset_left = tab.parent().offset().left + (win_width/2 - (this_width/2 + this_left));
+            offset_left = offset_left > 0 ? 0 : offset_left < -(tas_width - win_width) ? win_width - tas_width : offset_left;
+            tab.parent().animate({'left': offset_left + 'px'},300);
         }
     };
-    animate_init();
-    $(window).on("scroll", function () {
-        animate_init();
-    });
 
-    $(window).on("resize", function () {
-        win_height = $(window).height();
-        el_top = $(evt.el).offset().top;
-        el_height = $(evt.el).outerHeight();
-    });
-}
-// 进入视图区域执行动画
-(function ($) {
-    //
-    $(function () {
-        $.each($("[data-rw='animate']"), function (i, v) {
-            show_animate(v, {
-                enter: function (evt) {
-                    var el = $(evt.el);
-                    el.addClass(el.data("animate") + ' animated');
-                    var css = {
-                        'animation-duration': el.data("duration"),
-                        '-webkit-animation-duration': el.data("duration"),
-                        'animation-delay': el.data("delay"),
-                        '-webkit-animation-delay': el.data("delay")
-                    };
-                    el.css(css);
-                }
-            });
-        });
-    });
-})(jQuery);
+    $(".tabs-container .nav-item").on("click", function () {
+        var that = $(this);
+        that.addClass("active");
+        that.siblings(".nav-item").removeClass("active");
+        var target = that.data("href").replace("#","");
+        var target_pane = $(".tab-panel[data-role="+ target +"]");
 
-// 自定义tab页面效果
-(function ($) {
-    $.fn.extend({
-        position: function (index) {
-            // 用于定位当前索引为index的tab
-            index = index || 0;
-            var that = this;
+        // target_pane.show().addClass("scaleIn");
+        target_pane.show().addClass("active");
+        target_pane.siblings().hide();
 
-            var $panes = this.find(".tabs-panel .tab-panel");
-            var width = this.find(".tabs-panel").outerWidth();
+        tabs_position(that);
 
-            // 初始化定位
-            for (var i = 0, len = $panes.length; i < len; i++) {
-                var css = {'position': 'absolute', 'top': '0px', 'left': '0px'};
-                css.left = width * (i - index) + 'px';
-                $($panes[i]).css(css);
-            }
-
-            $(window).on("scroll", function () {
-                that.find(".tabs-panel").css('height', that.find(".tab-panel.active").outerHeight() + 'px');
-            });
-            setTimeout(function () {
-                that.find(".tabs-panel").css('height', $panes.eq(index).outerHeight() + 'px');
-            },0);
-
-            // 将左右两边的tabs动画去除
-
-
-            setTimeout(function () {
-                var $others = $panes.eq(index).siblings(".tab-panel").find("[data-rw='animate']");
-                // console.log($others)
-                var $otherscss = {
-                    'animation-duration': "initial",
-                    '-webkit-animation-duration': "initial",
-                    'animation-delay': "initial",
-                    '-webkit-animation-delay': "initial"
-                };
-                $.each($others, function (i, v) {
-                    $(v).removeClass($(v).data("animate") + ' animated');
-                    $(v).css($otherscss);
-                });
-            },500);
-        },
-        tabinit: function () {
-            var that = this;
-            if (!that.length) {
-                console.error(this.get(0).id + "is not a 'tabs-container'");
-                return false;
-            }
-            var href = location.hash;
-
-            // 定位上一个tab
-            if (href != "") {
-                var $a = that.find("a[data-href='" + href + "']");
-                var $tab = that.find(".tab-panel[data-role='" + href.split('#')[1] + "']");
-
-                if ($a.length) {
-                    $a.addClass("active");
-                    $a.siblings().removeClass("active");
-                }
-                if ($tab.length) {
-                    $tab.addClass("active");
-                    $tab.siblings().removeClass("active");
-                }
-
-                // 定位到已选tab
-                that.position($a.index());
-            }
-            // 正常tab初始化
-            else {
-                that.position();
-            }
-
-            var slide = function (index, lastIndex) {
-                var width = that.find(".tabs-panel").outerWidth();
-                var $panes = that.find(".tab-panel");
-
-                that.find(".tabs-panel").css('height', $panes.eq(index).outerHeight() + 'px');
-
-                // 从右向左
-                if (index > lastIndex) {
-                    // 归位
-                    $panes.eq(index).addClass("active").css({'left': width + "px"});
-                    // 走
-                    $panes.eq(lastIndex).animate({"left": -width + "px", 'z-index': '10'}, 500);
-                }
-                // 从左向右
-                if (index < lastIndex) {
-                    // 归位
-                    $panes.eq(index).addClass("active").css({'left': -width + "px"});
-                    // 走
-                    $panes.eq(lastIndex).animate({"left": width + "px", 'z-index': '10'}, 500);
-                }
-                // 进来
-                $panes.eq(index).animate({"left": "0"}, 500);
-
-                // 同步
-                // 执行动画开始
-                var $target = $panes.eq(index).find("[data-rw='animate']");
-                $.each($target, function (i, v) {
-                    $(v).addClass($(v).data("animate") + ' animated');
-                    var css = {
-                        'animation-duration': $(v).data("duration"),
-                        '-webkit-animation-duration': $(v).data("duration"),
-                        'animation-delay': $(v).data("delay"),
-                        '-webkit-animation-delay': $(v).data("delay")
-                    };
-                    $(v).css(css);
-                });
-                // 执行动画结束
-
-                // 500ms动画结束后
-                setTimeout(function () {
-                    $panes.eq(index).addClass("active"); // 并非每次都执行，需要保留
-                    $panes.eq(index).siblings().removeClass("active");
-
-                    // 取消上一tab的动画
-                    var $lastTarget = $panes.eq(lastIndex).find("[data-rw='animate']");
-                    var css = {
-                        'animation-duration': "initial",
-                        '-webkit-animation-duration': "initial",
-                        'animation-delay': "initial",
-                        '-webkit-animation-delay': "initial"
-                    };
-                    $.each($lastTarget, function (i, v) {
-                        $(v).removeClass($(v).data("animate") + ' animated');
-                        $(v).css(css);
-                    });
-                }, 500);
-            };
-
-            // 事件绑定
-            that.find('.nav-item').on("click", function () {
-                var index = $(this).index();
-                var lastIndex = $(".tab-panel.active").index();
-                if (index != lastIndex) {
-                    slide(index, lastIndex);
-                }
-                // that.position(index);
-
-                $(this).addClass("active");
-                $(this).siblings().removeClass("active");
-                location.hash = $(this).data("href");
-            });
-            $(window).on("resize", function () {
-                that.position($('.nav-item.active').index());
+        var id = location.hash || "";
+        if(id != ''){
+            $("[data-role='"+ id.replace('#',"") +"']").find(".av-container").each(function (i, v) {
+                $(v).removeClass("av-visible animated " + $(v).attr('data-animate'));
             });
         }
+        $(window).scrollTop($(window).scrollTop()+1);
+        $(window).scrollTop($(window).scrollTop()-1);
+        location.hash = that.data("href");
     });
-})(jQuery);
-
-
-
+    // 重置到上次点击的tab
+    var target = location.hash;
+    if(target != ""){
+        var tar_tab = $('[data-href="'+ target +'"]');
+        if(tar_tab.length && tar_tab.index() > 0){
+            tar_tab.click();
+        }
+    }
+});
+$(window).resize(function () {
+    winH = $(window).height();
+    setWrapper();
+    equalHeight("#view-img>img");
+    tabs_slide();
+});
 
 var commonApp = angular.module("commonApp", [])
     .run(function ($rootScope) {
@@ -297,6 +160,11 @@ var commonApp = angular.module("commonApp", [])
             } else {
                 $rootScope.catalog = catalog.SCN;
             }
+            setTimeout(function () {
+                setWrapper();
+                $('[data-rw="animate"]').AniView();
+                tabs_slide();
+            },100);
         };
         $rootScope.initLanguage(getCookie("language"));
 

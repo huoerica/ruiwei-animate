@@ -51,8 +51,8 @@ catalog = {
             title: 'Management Team',
             teamusers: [{name: 'Mr. ZHU Ping', position: 'Chairman of the Board/ Executive Director',detail: 'Overseeing our Group’s development, strategy, planning, positioning and overall business management.'},
                 {name: 'Mr. DUAN Kejian', position: 'Executive Director/Chief Operating Officer',detail:'Leading project development department.'},
-                {name: 'Ms. SU Yi', position: 'Executive Director/Chief Financial Officer',detail:'Advising on strategic development and corporate governance from the financial perspective.'},
                 {name: 'Mr. WANG Xuyang', position: 'Non-executive Director',detail:'Advising on strategic development and corporate governance.'},
+                {name: 'Ms. SU Yi', position: 'Executive Director/Chief Financial Officer',detail:'Advising on strategic development and corporate governance from the financial perspective.'},
                 {name: 'Mr. CHENG Jun', position: 'Non-executive Director',detail:'Advising on strategic development and corporate governance.'},
                 {name: 'Ms. YANG Huifang', position: 'Independent/Non-executive Director',detail:'Providing independent judgment onthe issues of strategy, performance, resources and standard of conduct of our Group.'},
                 {name: 'Mr. SHANG Jian', position: ' Independent/Non-executive Director',detail:'Providing independent judgment onthe issues of strategy, performance, resources and standard of conduct of our Group.'},
@@ -62,10 +62,10 @@ catalog = {
         //业务概览内容
         layoutdetail: {
             title: 'Realway Capital industrial layout',
-            content: '<p>Our funds’portfolio covers<span> commercial real estate projects,distressed assets projects and urbanisation and redevelopment projects</span>.</p>'
-            + '<p>Our mission is to leverage on our asset management expertise, risk management knowhow and execution capability to enhance value of different types of real estate projects through, among others, destocking of existing inventory in real estate market and revitalisation of distressed or other underutilised assets, thereby promoting the overall healthy growth of the PRC economy.</p>'
-            + '<p>Since our<span> establishment in 2010</span>,the funds we manage have invested in a total of 25 sizeable investment projects, <span>13</span> of which were completed and successfully exited.<p>'
-            + '<p>These investment projects comprised portfolio assets which were spread over more than 10 PRC cities, including Shanghai, Hangzhou, Fuzhou, Nanjing, Xi’an, Hefei, Zhoushan, Wuxi, Chengdu, Jining, Ningbo and Shenzhen.<p>',
+            content: '<p>Our funds’portfolio covers <span>commercial real estate projects, distressed assets projects and urbanisation and redevelopment projects</span>.</p>'
+            + '<p>Our mission is to leverage on our asset management expertise, risk management knowhow and execution capability to enhance value of different types of real estate projects through, among others, destocking of existing inventory in real estate market and revitalisation of distressed or other underutilised assets, thereby <span>promoting the overall healthy growth of the PRC economy</span>.</p>'
+            + '<p>Since our<span> establishment in 2010</span>,the funds we manage have invested in a total of <span>25</span> sizeable investment projects, <span>13</span> of which were completed and successfully exited.<p>'
+            + '<p>These investment projects comprised portfolio assets which were spread over more than 10 PRC cities, including <span>Shanghai, Hangzhou, Fuzhou, Nanjing, Xi’an, Hefei, Zhoushan, Wuxi, Chengdu, Jining, Ningbo</span> and <span>Shenzhen</span>.<p>',
             title12: 'Some project cases',
             tagname: 'Related projects',
             project1: [
@@ -86,7 +86,7 @@ catalog = {
                 },
                 {
                     title: 'Urban Construction Projects',
-                    content: 'Urbanisation and redevelopment projects mainly include the redevelopment or reconstruction projects of specific cities, and the funds we manage generally invest in equity capital of related projects. Our investment funds can invest in urbanisation and redevelopment projects at different stages of their development.',
+                    desc: 'Urbanisation and redevelopment projects mainly include the redevelopment or reconstruction projects of specific cities, and the funds we manage generally invest in equity capital of related projects. Our investment funds can invest in urbanisation and redevelopment projects at different stages of their development.',
                     list: ['Chengdu Project', 'Shenzhen Xinqiaowei Project', 'Shengsi Project']
                 }
             ]
@@ -155,6 +155,8 @@ catalog = {
         notices: {
             title: 'Announcement and Notification', placeholder: 'please input keywords', search: 'search'
         },
+        // 首页bannerText
+        bannerText: 'Innovative Asset Management Co focusing on real estate fund management',
     },
     'SCN': {
         index: '首页', aboutus: '关于我们', business: '业务概览', investor: '投资者关系',
@@ -184,7 +186,7 @@ catalog = {
         award: {
             title: '主要获奖记录',
             content: ['《2017年中国不动产基金综合能力TOP 10》 颁奖单位：中国指数研究院',
-                '《2016年中国不动产基金综合能力Top 10》 颁奖单位：中国指数研究院',
+                '《2016年中国不动产基金综合能力TOP 10》 颁奖单位：中国指数研究院',
                 ' 2016年 佰仕鸿鹄奖《金融创新之星》 颁奖单位：万商俱乐部 、易居 、佰仕会'
             ]
         },
@@ -192,8 +194,8 @@ catalog = {
         teamdetail: {
             title: '管理团队',
             teamusers: [{name: '朱平先生', position: '董事长/执行董事'},
-                {name: '苏怡女士', position: '执行董事/营运总监'},
                 {name: '段克俭先生', position: '执行董事/财务总监'},
+                {name: '苏怡女士', position: '执行董事/营运总监'},
                 {name: '王旭阳先生', position: '非执行董事'},
                 {name: '成军先生', position: '非执行董事'},
                 {name: '杨慧芳女士', position: '独立非执行董事'},
@@ -204,10 +206,10 @@ catalog = {
         //业务概览内容
         layoutdetail: {
             title: '瑞威资本产业布局',
-            content: '<p>我们的基金主要投向<span>商业不动产项目、不良资产项目</span>以及<span>城市建设项目</span>。</p>'
-            + '<p>我们的使命为利用我们资产管理技能、风险管理专业知识及执行能力以通过（其中包括）去除不动产市场现有存货及振兴不良或其他利用不足的资产增强不同类别的不动产项目的价值，从而促进中国经济整体健康增长。</p>'
-            + '<p>自我们<span>2010年成立以来</span>，我们管理的基金已经投资了合计25个大型投资项目，其中已经完成及成功退出的项目为<span>13个</span>。<p>'
-            + '<p>该等投资项目由遍布包括上海、杭州、福州、南京、西安、合肥、舟山、无锡、成都、济宁、宁波 及深圳在内的十多个中国城市的组合资产组成。<p>',
+            content: '<p>我们的基金主要投向<span> 商业不动产项目、不良资产项目 </span>以及<span> 城市建设项目 </span>。</p>'
+            + '<p>我们的使命为利用我们资产管理技能、风险管理专业知识及执行能力以通过（其中包括）去除不动产市场现有存货及振兴不良或其他利用不足的资产增强不同类别的不动产项目的价值，从而<span> 促进中国经济整体健康增长 </span>。</p>'
+            + '<p>自我们<span> 2010年成立以来 </span>，我们管理的基金已经投资了合计<span> 25个 </span>大型投资项目，其中已经完成及成功退出的项目为<span> 13个 </span>。<p>'
+            + '<p>该等投资项目由遍布包括<span> 上海、杭州、福州、南京、西安、合肥、舟山、无锡、成都、济宁、宁波 </span>及<span> 深圳 </span>在内的十多个中国城市的组合资产组成。<p>',
             title12: '部分项目案例',
             tagname: '相关项目',
             project1: [
@@ -228,7 +230,7 @@ catalog = {
                 },
                 {
                     title: '城市建设项目',
-                    content: '城市建设项目主要包括特定城市重新开发或重建项目，且我们所管理基金一般投资于相关项目的权益资本。我们的投资基金可于不同的开发阶段投资于城市建设项目。',
+                    desc: '城市建设项目主要包括特定城市重新开发或重建项目，且我们所管理基金一般投资于相关项目的权益资本。我们的投资基金可于不同的开发阶段投资于城市建设项目。',
                     list: ['成都奥克伍德酒店公寓项目', '深圳新乔围城市更新项目', '浙江嵊泗山屿海旅游地产投资项目']
                 }
             ]
@@ -295,7 +297,9 @@ catalog = {
                 {name:'武汉瑞威商务咨询有限公司',type:'地方公司',addrkey: '地址',address:'武汉市江汉区建设大道568号新世界国贸大厦35楼'},
                 {name:'嘉晟瑞信（天津）基金销售有限公司',type:'地方公司',addrkey: '地址',address:'天津市南开区悦府广场1号楼2503室'},
             ]
-        }
+        },
+        // 首页bannerText
+        bannerText: '专注于不动产基金管理的创新型资产管理公司',
     },
     'TCN': {
         index: '首頁', aboutus: '關於我們', business: '業務預覽', investor: '投資者關係',
@@ -325,7 +329,7 @@ catalog = {
         award: {
             title: '主要獲獎記錄',
             content: ['《2017年中國不動產基金綜合能力TOP 10》 頒獎組織：中國指數研究院',
-                '《2016年中國不動產基金綜合能力Top 10》 頒獎組織：中國指數研究院',
+                '《2016年中國不動產基金綜合能力TOP 10》 頒獎組織：中國指數研究院',
                 '2016年佰仕鴻鵠獎《金融創新之星》頒獎組織：萬商俱樂部、易居、佰仕會'
             ]
         },
@@ -333,8 +337,8 @@ catalog = {
         teamdetail: {
             title: '管理團隊',
             teamusers: [{name: '朱平先生', position: '董事長/執行董事'},
-                {name: '蘇怡女士', position: '執行董事/營運總監'},
                 {name: '段克儉先生', position: '執行董事/财务总监'},
+                {name: '蘇怡女士', position: '執行董事/營運總監'},
                 {name: '王旭陽先生', position: '非執行董事'},
                 {name: '成軍先生', position: '非執行董事'},
                 {name: '楊慧芳女士', position: '獨立非執行董事'},
@@ -345,10 +349,10 @@ catalog = {
         //业务概览内容
         layoutdetail: {
             title: '瑞威資本產業佈局',
-            content: '<p>我們的基金主要投向<span>商業不動產項目、不良資產項目</span>以及<span>都市建設項目</span>。</p>'
-            + '<p>我們的使命為利用我們資產管理技能、風險管理專業知識及執行能力以通過（其中包括）去除不動產市場現有存貨及振興不良或其他利用不足的資產增强不同類別的不動產項目的價值，從而促進中國經濟整體健康增長。</p>'
-            + '<p>自我們<span>2010年成立以來</span>，我們管理的基金已經投資了合計25個大型投資項目，其中已經完成及成功退出的項目為<span>13個</span>。<p>'
-            + '<p>該等投資項目由遍佈包括上海、杭州、福州、南京、西安、合肥、舟山、無錫、成都、濟寧、寧波 及深圳在內的十多個中國都市的組合資產組成。<p>',
+            content: '<p>我們的基金主要投向<span> 商業不動產項目、不良資產項目 </span>以及<span> 都市建設項目 </span>。</p>'
+            + '<p>我們的使命為利用我們資產管理技能、風險管理專業知識及執行能力以通過（其中包括）去除不動產市場現有存貨及振興不良或其他利用不足的資產增强不同類別的不動產項目的價值，從而<span> 促進中國經濟整體健康增長 </span>。</p>'
+            + '<p>自我們<span> 2010年成立以來 </span>，我們管理的基金已經投資了合計<span> 25個 </span>大型投資項目，其中已經完成及成功退出的項目為<span> 13個 </span>。<p>'
+            + '<p>該等投資項目由遍佈包括<span> 上海、杭州、福州、南京、西安、合肥、舟山、無錫、成都、濟寧、寧波 </span>及<span> 深圳 </span>在內的十多個中國都市的組合資產組成。<p>',
             title12: '部分項目案例',
             tagname: '相關項目',
             project1: [
@@ -369,7 +373,7 @@ catalog = {
                 },
                 {
                     title: '城市建設項目',
-                    content: '城市建設項目主要包括特定都市重新開發或重建項目，且我們所管理基金一般投資於相關項目的權益資本。我們的投資基金可於不同的開發階段投資於都市建設項目。',
+                    desc: '城市建設項目主要包括特定都市重新開發或重建項目，且我們所管理基金一般投資於相關項目的權益資本。我們的投資基金可於不同的開發階段投資於都市建設項目。',
                     list: ['成都奧克伍德酒店公寓項目', '深圳新喬圍都市更新項目', '浙江嵊泗山嶼海旅遊地產投資項目']
                 }
             ]
@@ -435,7 +439,8 @@ catalog = {
                 {name:'武漢瑞威商務諮詢有限公司',type:'地方公司',addrkey: '地址',address:'武漢市江漢區建設大道568號新世界國貿大廈35樓'},
                 {name:'嘉晟瑞信（天津）基金銷售有限公司',type:'地方公司',addrkey: '地址',address:'天津市南開區悅府廣場1號樓2503室'},
             ]
-        }
-
+        },
+        // 首页bannerText
+        bannerText: '專注於不動產基金管理的創新型資產管理公司',
     }
 };

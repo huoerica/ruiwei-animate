@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>关于我们</title>
+    <link rel="shortcut icon" href="../assets/img/ico.png"/>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/animate.min.css">
 
@@ -17,9 +18,10 @@
     <script src="../assets/js/commonApp.js"></script>
     <script src="../assets/js/catalog.js"></script>
 
+    <script src="../assets/js/jquery.aniview.js"></script>
 
     <script>
-        bodyApp = angular.module('bodyapp', ['commonApp','ngSanitize']);
+        bodyApp = angular.module('bodyapp', ['commonApp', 'ngSanitize']);
     </script>
 </head>
 <body ng-app="bodyapp" ng-cloak>
@@ -35,14 +37,14 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="">{{catalog.index}}</a></li>
-            <li class="active"><a href="">{{catalog.aboutus}}</a></li>
-            <li><a href="">{{catalog.business}}</a></li>
-            <li><a href="">{{catalog.investor}}</a></li>
+            <li><a href="index.html">{{catalog.index}}</a></li>
+            <li class="active"><a href="aboutus.html">{{catalog.aboutus}}</a></li>
+            <li><a href="businessoverview.html">{{catalog.business}}</a></li>
+            <li><a href="investorrelation.html">{{catalog.investor}}</a></li>
             <li><a href="">{{catalog.crm}}</a></li>
-            <li><a href="">{{catalog.media}}</a></li>
-            <li><a href="">{{catalog.employ}}</a></li>
-            <li><a href="">{{catalog.contact}}</a></li>
+            <li><a href="media.html">{{catalog.media}}</a></li>
+            <li><a href="job.html">{{catalog.employ}}</a></li>
+            <li><a href="contactus.html">{{catalog.contact}}</a></li>
         </ul>
     </div>
     <div class="navbar-language">
@@ -51,20 +53,22 @@
         <span ng-class="{'active':language=='TCN'}" ng-click="witchLanguage('TCN')">繁</span>
     </div>
 </nav>
-<div class="body-wrapper" ng-controller="wrapperCtrl">
+<div class="body-wrapper" ng-controller="wrapperCtrl" ng-cloak>
     <div class="banner-container">
-        <img src="../assets/img/investor_bn.png"/>
+        <img src="../assets/img/banner1.jpg"/>
     </div>
     <div class="tabs-container" id="tabsCont">
         <div class="tabs-nav">
-            <a href="javascript:;" data-href="#one" class="nav-item active">{{catalog.enterprise}}</a>
-            <a href="javascript:;" data-href="#two" class="nav-item ">{{catalog.develop}}</a>
-            <a href="javascript:;" data-href="#three" class="nav-item">{{catalog.team}}</a>
+            <div class="tabs-nav-inner">
+                <a data-href="#one" class="nav-item active">{{catalog.enterprise}}</a>
+                <a data-href="#two" class="nav-item ">{{catalog.develop}}</a>
+                <a data-href="#three" class="nav-item">{{catalog.team}}</a>
+            </div>
         </div>
-        <div class="tabs-panel">
+        <div class="tabs-panel aboutus-panels">
             <div class="tab-panel active" data-role="one">
                 <div class="overview-container" ng-class="{'mobile': clientFlag,'client': !clientFlag}">
-                    <div class="container">
+                    <div class="container" ng-class="{'en':language=='EN'}">
                         <div class="view-item">
                             <div class="text" data-rw="animate" data-animate="fadeInLeft" data-duration="1s" data-delay="0s">
                                 <h4 class="title">{{catalog.overview.title}}</h4>
@@ -75,18 +79,18 @@
                         </div>
 
                         <div class="view-item">
-                            <img src="../assets/img/overview2.png" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.2s"/>
-                            <div class="text" data-rw="animate" data-animate="fadeInDown" data-duration="1s" data-delay="0.2s">
+                            <div class="text" data-rw="animate" data-animate="fadeInRight" data-duration="1s" data-delay="0.2s">
                                 <p>{{catalog.overview.content[2]}}</p>
                                 <p>{{catalog.overview.content[3]}}</p>
                             </div>
+                            <img src="../assets/img/overview2.png" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.2s"/>
                         </div>
 
-                        <div class="view-item" id="view-img">
-                            <img src="../assets/img/overview3.png" data-rw="animate" data-animate="fadeInLeft" data-duration="1s" data-delay="0.3s"/>
-                            <div class="text" data-rw="animate" data-animate="fadeInRight" data-duration="1s" data-delay="0.3s">
+                        <div class="view-item" id="view-img" data-rw="animate" data-animate="fadeInRight" data-duration="1s" data-delay="0.1s">
+                            <div class="text" id="view-imgtext">
                                 <p>{{catalog.overview.content[4]}}</p>
                             </div>
+                            <img src="../assets/img/overview3.png"/>
                         </div>
                     </div>
                 </div>
@@ -95,7 +99,7 @@
                 <div class="develop-container">
                     <h4 class="title">{{catalog.develop}}</h4>
                     <div class="container">
-                        <div class="develop-scroll">
+                        <div class="develop-scroll" ng-class="{'client': !clientFlag}">
                             <div id="develop-view" class="develop-timeline" ng-class="{'vert-timeline': clientFlag,'horiz-timeline':!clientFlag}">
                                 <div class="timeline-item">
                                     <div class="item-inner" data-rw="animate" data-animate="fadeInDown" data-duration="1s" data-delay="0s">
@@ -122,7 +126,7 @@
                                         <div class="text">我们与中国不动产开发商前一百强龙记地产集团股份有限公司订立战 略合作关系，并就其西安国会山项目筹集项目基金。</div>
                                     </div>
                                 </div>
-                                <div class="timeline-item">
+                                <div class="timeline-item" data-rw="animate" data-animate="fadeInDown" data-duration="1s" data-delay="0.4s">
                                     <div class="item-inner">
                                         <div class="time">2014年5月</div>
                                         <div class="text">我们根据中国当时执行的《私募证券投资基金业务监督管理暂行办法》，
@@ -130,19 +134,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="timeline-item">
+                                <div class="timeline-item" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.5s">
                                     <div class="item-inner">
                                         <div class="time">2015年1月</div>
                                         <div class="text">我们发起首支契约基金「厚 誉 二 号」，其为年内实施的中国私募股权基金管理规范规定的全新基金类型。</div>
                                     </div>
                                 </div>
-                                <div class="timeline-item">
+                                <div class="timeline-item" data-rw="animate" data-animate="fadeInDown" data-duration="1s" data-delay="0.6s">
                                     <div class="item-inner">
                                         <div class="time">2015年12月</div>
                                         <div class="text">当时最大一支基金的管理资产新田360项目达约人民币539,000,000元。</div>
                                     </div>
                                 </div>
-                                <div class="timeline-item">
+                                <div class="timeline-item" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.7s">
                                     <div class="item-inner">
                                         <div class="time">2016年1月</div>
                                         <div class="text">本公司由有限公司转型为股份有限公司，且本公司更名为上海瑞威资产管理股份有限公司。</div>
@@ -164,11 +168,12 @@
 
                     <div class="award-record">
                         <div class="container">
-                            <h4 data-rw="animate" data-animate="bounce" data-duration="1s" data-delay="0s">{{catalog.award.title}}</h4>
+                            <h4 data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0s">
+                                {{catalog.award.title}}</h4>
                             <div>
-                                <p ng-bind="catalog.award.content[0]" data-rw="animate" data-animate="bounceInUp" data-duration="1s" data-delay="0.1s"></p>
-                                <p ng-bind="catalog.award.content[1]" data-rw="animate" data-animate="bounceInUp" data-duration="1s" data-delay="0.2s"></p>
-                                <p ng-bind="catalog.award.content[2]" data-rw="animate" data-animate="bounceInUp" data-duration="1s" data-delay="0.3s"></p>
+                                <p ng-bind="catalog.award.content[0]" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.3s"></p>
+                                <p ng-bind="catalog.award.content[1]" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.4s"></p>
+                                <p ng-bind="catalog.award.content[2]" data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.5s"></p>
                             </div>
                         </div>
                     </div>
@@ -179,7 +184,8 @@
                     <h4 class="title">{{catalog.team}}</h4>
                     <div class="container">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-3 col-md-3" ng-repeat="item in catalog.teamdetail.teamusers" data-rw="animate" data-animate="bounceInUp" data-duration="1s" data-delay="0.1s">
+                            <div class="col-xs-12 col-sm-3 col-md-3" ng-repeat="item in catalog.teamdetail.teamusers"
+                                    data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="{{(Math.floor($index/4)+1)*0.1}}s">
                                 <div class="team-item">
                                     <img err-src="../assets/img/team/team1.png" src="../assets/img/team/team{{$index+1}}.png"/>
                                     <div class="name" ng-bind="item.name"></div>
@@ -189,7 +195,8 @@
                         </div>
                         <div class="row descript">
                             <div class="col-xs-12 col-sm-10 col-md-8 col-xs-offset-0 col-sm-offset-1 col-md-offset-2">
-                                <p data-rw="animate" data-animate="bounceInUp" data-duration="1s" data-delay="0.1s">{{catalog.teamdetail.content}}</p>
+                                <p data-rw="animate" data-animate="fadeInUp" data-duration="1s" data-delay="0.3s">
+                                    {{catalog.teamdetail.content}}</p>
                             </div>
                         </div>
                     </div>
@@ -198,16 +205,17 @@
         </div>
     </div>
 </div>
-<footer class="footer" ng-controller="footerCtrl">
+<footer class="footer" ng-controller="footerCtrl" ng-cloak>
     <div class="container">
         <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 footer__item--other">
-                <img src="../assets/img/logo.png"/>
-                <p>
-                    关联子公司：<a href="/privacy.html" class="footer__list-link">Privacy Policy</a>
-                </p>
+            <div class="col-md-3 col-sm-4 col-xs-12 footer__item--other text-center" ng-class="{'col-lg-3':language!='EN'}">
+                <img src="../assets/img/logo-foot.png"/>
+                <div class="footer_child">
+                    <p>关联子公司：</p>
+                    <a href="https://www.jsrxfund.com/" target="_blank"><img src="../assets/img/childcomp.png"/></a>
+                </div>
             </div>
-            <div class="col-lg-10 col-md-9 col-sm-12 footer-nav">
+            <div class="col-md-9 col-sm-12 footer-nav" ng-class="{'col-lg-8':language!='EN'}">
                 <div class="footer__item">
                     <h3 class="footer__title">{{catalog.index}}</h3>
                     <ul class="footer__list">
@@ -319,6 +327,16 @@
 </footer>
 </body>
 <script>
+    $(function () {
+        var options = {
+            animateThreshold: 0,
+            scrollPollInterval: 20
+        };
+        $('[data-rw="animate"]').AniView(options);
+
+        $("#view-imgtext").css("height", $("#view-img").width() * 0.25 + "px");
+    });
+
     bodyApp.controller("headerCtrl", function ($scope, $rootScope) {
         console.log("header controller");
         document.title = $rootScope.catalog.aboutus;
@@ -333,7 +351,8 @@
     bodyApp.controller("wrapperCtrl", function ($scope, $rootScope) {
         console.log("wrapper controller");
 
-        $("#tabsCont").tabinit();
+//        $("#tabsCont").tabinit();
+        // tab,animation初始化
 
         //初始化发展历程
         $scope.developTotal = 9;
@@ -342,7 +361,7 @@
         $scope.initDevelop = function () {
             if (!$rootScope.clientFlag) {
                 var total_w = $scope.developTotal * 150 + 200;
-                var outer_w = $(".develop-scroll").outerWidth(true);
+                var outer_w = $(".overview-container .container").outerWidth() - 30;
                 var even_H = 0, odd_H = 0;
                 var scroll_flag = false;
                 if (total_w > outer_w) {
@@ -351,7 +370,6 @@
                 } else {
                     $("#develop-view").css('width', outer_w);
                 }
-                // $("#develop-view").css('width', total_w > outer_w ? total_w+200 : outer_w);
                 $(".timeline-item").each(function (index, obj) {
                     var curr_H = $(obj).outerHeight(true);
                     if (index % 2 == 0) {
@@ -367,23 +385,27 @@
                     scroll_w = 450;
                 $(".develop-btns .prev-btn").click(function () {
                     margin_left = parseInt(scroll_node.css('marginLeft'));
-                    console.log(margin_left);
+                    // console.log(margin_left);
                     if (!$scope.dpstart && margin_left < 0) {
                         $scope.dpend = false;
-                        if(margin_left + scroll_w < 0){
+                        if (margin_left + scroll_w < 0) {
                             margin_left += scroll_w;
                             $scope.dpstart = false;
-                        }else{
+                        } else {
                             margin_left = 0;
                             $scope.dpstart = true;
                         }
-                        scroll_node.css({
+                        scroll_node.animate({
                             marginLeft: margin_left
-                        });
+                        }, 300, 'linear');
+                        /*scroll_node.css({
+                            marginLeft: margin_left
+                        });*/
                     }
                 });
                 $(".develop-btns .next-btn").click(function () {
                     margin_left = parseInt(scroll_node.css('marginLeft'));
+                    // console.log(margin_left);
                     if (!$scope.dpend) {
                         $scope.dpstart = false;
                         if ((scroll_w - margin_left + outer_w) > total_w) {
@@ -393,9 +415,12 @@
                             margin_left -= scroll_w;
                             $scope.dpend = false;
                         }
-                        scroll_node.css({
+                        scroll_node.animate({
                             marginLeft: margin_left
-                        });
+                        }, 300, 'linear');
+                        /*scroll_node.css({
+                            marginLeft: margin_left
+                        });*/
                     }
                 });
             }

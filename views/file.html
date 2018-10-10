@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="../assets/js/bootstrap.min.css">-->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_684944_zv143b7i92n.css">
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/bootstrap.min.js"></script>
+    <!--<script src="../assets/js/bootstrap.min.js"></script>-->
+
+    <title></title>
+    <style>
+        body{ margin: 50px;}
+        ul,li{padding: 0; list-style: none;}
+        .modal.in .modal-dialog{z-index: 9999;}
+
+        .lg-file-btn{ border: 1px solid #808a89; color: #808a89; background: #fff; position: relative; padding-left: 30px;}
+        .lg-file-btn:after,.lg-file-btn:before{content: ""; display: block; width: 12px; height: 2px; left: 8px; top: 15px; background: #808a89; position: absolute; }
+        .lg-file-btn:before{  -webkit-transform: rotate(90deg);  -moz-transform: rotate(90deg);  -ms-transform: rotate(90deg);  -o-transform: rotate(90deg);  transform: rotate(90deg);}
+        .lg-file-btn:focus,.lg-file-btn:active{outline: none!important;}
+
+        .lg-file-modal{}
+        .lg-file-modal .modal-content{ border-radius: 0;}
+        .lg-file-modal .modal-header{ padding: 8px 15px 5px; background: #ebebeb;}
+        .lg-file-modal .modal-header .modal-title{font-size: 16px;}
+        .lg-file-modal .btn-submit{ border: none; background: #FF7F2B; color: #fff; padding: 4px 28px;}
+        .lg-file-modal .btn-cancel{border: none; padding: 4px 20px;}
+        .lg-file-modal .modal-footer .btn:focus{outline: none!important;}
+
+        .lg-file-body{height: 400px; position: relative; overflow: hidden;}
+        .lg-file-body .left-list{padding: 10px; width: 48%; background: #f6f6f6; height: 100%; float: left;}
+        .lg-file-body .right-list{width: 48%; overflow-x: hidden; background: #f6f6f6; height: 100%; float: right; padding: 15px;}
+        .lg-file-body .vertical-l{height: 100%; width: 1px; background: #e5e5e5; float: left; margin-left: 2%;}
+
+        .lg-file-body .left-list .file-crumb{ height: 30px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .lg-file-body .left-list .file-crumb>a{color: #2e6da4; cursor: pointer;}
+        .lg-file-body .left-list .file-crumb>a:hover{text-decoration: none;}
+        .lg-file-body .left-list .file-crumb>a:after{content: "\e892"; font-family: "sxfont"; color: #333; font-size: 12px; line-height: 12px;}
+        .lg-file-body .left-list .file-crumb>a:last-child{cursor: default; color: #999;}
+        .lg-file-body .left-list .file-crumb>a:last-child:after{content: none;}
+
+        .lg-file-body .left-list .files-box{height: calc(100% - 30px);height: -webkit-calc(100% - 30px);}
+        .lg-file-check{ white-space: nowrap;text-overflow: ellipsis; overflow: hidden; margin: 0; padding: 0; font-weight: normal; display: inline-block; user-select:none;}
+        .lg-file-check .square{display: inline-block; margin-right: 8px; color: transparent; border-radius: 3px; cursor: pointer; font-size: 12px; width: 15px;height: 15px; line-height: 14px; border: 1px solid #ccc; text-align: center;}
+        .lg-file-check input[type=checkbox]{display: none;}
+        .lg-file-check input:checked + .square{ color: #FF7F2B;}
+        .lg-file-body .files-box .chose-all{height: 30px;}
+        .lg-file-body .files-box .files-list{ overflow-x: hidden; height: calc(100% - 30px);height: -webkit-calc(100% - 30px);}
+        .lg-file-body .files-box .files-list li{ padding: 2px 0 2px 26px;}
+        .lg-file-body .files-box .files-list li:hover{background: #ebebeb;}
+        .lg-file-body .files-box .files-list li .lg-file-check{display: block;}
+
+        .lg-file-body .right-list .chosen-file{ padding: 2px 30px 2px 0; position: relative; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+        .lg-file-body .right-list .chosen-file .delete{ position: absolute; right: 0; top: 3px; color: #808a89; cursor: pointer;}
+        .lg-file-body .right-list .chosen-file .delete:hover{ color: #ff0041;}
+
+
+
+    </style>
+</head>
+<body>
+    <button class="btn lg-file-btn" data-toggle="modal" data-target="#lgFileModal">超大附件</button>
+
+    <div class="modal fade lg-file-modal" id="lgFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加超大附件</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="lg-file-body">
+                        <div class="left-list">
+                            <div class="file-crumb">
+                                <a>文件夹</a>
+                                <a>文件夹22</a>
+                                <a>尚信PDF</a>
+                            </div>
+                            <div class="files-box">
+                                <div class="chose-all">
+                                    <label class="lg-file-check">
+                                        <input type="checkbox">
+                                        <i class="square sxfont sx-sx-right"></i>
+                                        <span>全选</span>
+                                    </label>
+                                </div>
+                                <div class="files-list">
+                                    <ul>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="lg-file-check">
+                                                <input type="checkbox">
+                                                <i class="square sxfont sx-sx-right"></i>
+                                                <span>赵红朵的原件资料00002.pdf</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vertical-l"></div>
+                        <div class="right-list">
+                            <ul>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111文件资料111111文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111文件资料111111文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111文件资料111111文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                                <li class="chosen-file">
+                                    <i class="sxfont sx-sx-attch"></i>
+                                    <span>文件资料111111.pdf</span>
+                                    <i class="delete sxfont sx-sx-del"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-submit">提交</button>
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

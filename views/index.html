@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>首页</title>
+    <link rel="shortcut icon" href="../assets/img/ico.png"/>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/animate.min.css">
 
@@ -14,15 +15,16 @@
     <script src="../assets/js/angular.min.js"></script>
     <script src="../assets/js/commonApp.js"></script>
     <script src="../assets/js/catalog.js"></script>
-
+    <script src="../assets/js/jquery.aniview.js"></script>
     <script>
         bodyApp = angular.module('bodyapp', ['commonApp']);
     </script>
 </head>
-<body ng-app="bodyapp" ng-cloak>
-<nav ng-controller="headerCtrl" class="navbar navbar-inverse navbar-fixed-top site-navbar">
+<body ng-app="bodyapp">
+<nav ng-controller="headerCtrl" ng-cloak class="navbar navbar-inverse navbar-fixed-top site-navbar">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -32,14 +34,14 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="">{{catalog.index}}</a></li>
-            <li><a href="">{{catalog.aboutus}}</a></li>
-            <li><a href="">{{catalog.business}}</a></li>
-            <li><a href="">{{catalog.investor}}</a></li>
+            <li class="active"><a href="index.html">{{catalog.index}}</a></li>
+            <li><a href="aboutus.html">{{catalog.aboutus}}</a></li>
+            <li><a href="businessoverview.html">{{catalog.business}}</a></li>
+            <li><a href="investorrelation.html">{{catalog.investor}}</a></li>
             <li><a href="">{{catalog.crm}}</a></li>
-            <li><a href="">{{catalog.media}}</a></li>
-            <li><a href="">{{catalog.employ}}</a></li>
-            <li><a href="">{{catalog.contact}}</a></li>
+            <li><a href="media.html">{{catalog.media}}</a></li>
+            <li><a href="job.html">{{catalog.employ}}</a></li>
+            <li><a href="contactus.html">{{catalog.contact}}</a></li>
         </ul>
     </div>
     <div class="navbar-language">
@@ -48,39 +50,27 @@
         <span ng-class="{'active':language=='TCN'}" ng-click="witchLanguage('TCN')">繁</span>
     </div>
 </nav>
-<div class="body-wrapper" ng-controller="wrapperCtrl">
-    <div class="banner-container">
-        <img src="../assets/img/investor_bn.png" />
-    </div>
-    <div class="tabs-container" id="tabsCont">
-        <div class="tabs-nav">
-            <a href="javascript:;" data-href="#one" class="nav-item active">{{catalog.layout}}</a>
-            <a href="javascript:;" data-href="#two" class="nav-item">{{catalog.distribution}}</a>
-        </div>
-        <div class="tabs-panel">
-            <div class="tab-panel active" data-role="one" style="background: #ccc">
-                <p>111111</p>
-                <p>111111</p>
-                <p>111111</p>
-            </div>
-            <div class="tab-panel" data-role="two" style="background: #d6e9c6">
-                <p>22222</p>
-                <p>22222</p>
-                <p>22222</p>
-            </div>
-        </div>
+<div class="body-wrapper-index" ng-cloak ng-controller="wrapperCtrl">
+    <div class="index-banner">
+        <ul>
+            <li ng-class="{'active': $first}" ng-repeat="b in banners.imgs">
+                <p class="banner-text">{{catalog.bannerText}}</p>
+                <img ng-src="../assets/img/{{b}}" />
+            </li>
+        </ul>
     </div>
 </div>
-<footer class="footer" ng-controller="footerCtrl">
+<footer class="footer" ng-controller="footerCtrl" ng-cloak>
     <div class="container">
         <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 footer__item--other">
-                <img src="../assets/img/logo.png" />
-                <p>
-                    关联子公司：<a href="/privacy.html" class="footer__list-link">Privacy Policy</a>
-                </p>
+            <div class="col-md-3 col-sm-4 col-xs-12 footer__item--other text-center" ng-class="{'col-lg-3':language!='EN'}">
+                <img src="../assets/img/logo-foot.png"/>
+                <div class="footer_child">
+                    <p>关联子公司：</p>
+                    <a href="https://www.jsrxfund.com/" target="_blank"><img src="../assets/img/childcomp.png" /></a>
+                </div>
             </div>
-            <div class="col-lg-10 col-md-9  col-sm-12 footer-nav">
+            <div class="col-md-9 col-sm-12 footer-nav" ng-class="{'col-lg-8':language!='EN'}">
                 <div class="footer__item">
                     <h3 class="footer__title">{{catalog.index}}</h3>
                     <ul class="footer__list">
@@ -192,23 +182,85 @@
 </footer>
 </body>
 <script>
-    bodyApp.controller("headerCtrl",function ($scope,$rootScope) {
+    $(function () {
+        var index = 0;
+        var lastindex = 0;
+
+        window.time = 5000;
+        var int;
+
+        function interval(len) {
+            int = setInterval(function () {
+                lastindex = index;
+                index ++ ;
+                if(index >=len){
+                    index = 0;
+                }
+                animate(index);
+            } , window.time);
+        }
+        interval(3);
+
+        function animate(index) {
+            var _li = $(".index-banner li").eq(index);
+            var _lisiblings = $(".index-banner li").eq(index).siblings();
+            _li.addClass("active");
+            _lisiblings.removeClass('active');
+
+            $(".index-banner li").eq(lastindex).addClass("fadeout");
+            setTimeout(function () {
+                $('.fadeout').removeClass("fadeout");
+            }, 1500);
+        }
+    });
+    bodyApp.controller("headerCtrl", function ($scope, $rootScope) {
         console.log("header controller");
 
         //点击切换语言
         $scope.witchLanguage = function (code) {
             $rootScope.initLanguage(code);
-            setCookie("language",code,7);
+            setCookie("language", code, 7);
         };
     });
-    bodyApp.controller("wrapperCtrl",function ($scope,$rootScope) {
+    bodyApp.controller("wrapperCtrl", function ($scope, $rootScope) {
         console.log("wrapper controller");
+        // tab,animation初始化
 
-        $("#tabsCont").tabinit();
+        $scope.banners = {
+            bannerText: $rootScope.catalog.bannerText,
+            imgs: ['index1.png','index2.png','index3.png']
+        };
+        // 首页banner的重置
+        $scope.resize_banner = function () {
+            var h = $(window).height();
+            // 小屏幕
+            if($(window).width() <= 768){
+                h = $(window).height() - $(".navbar-inverse").outerHeight();
+                $scope.banners.imgs = ['index1_m.png','index2_m.png','index3_m.png'];
+                $(".body-wrapper-index").css({'margin-top': $(".navbar-inverse").outerHeight()+'px', 'height': h+'px'});
+            }
+            // pc
+            else{
+                $(".body-wrapper-index").height(h);
+                $('.navbar-inverse').css("opacity", '0.8');
+            }
+        };
+        $scope.resize_banner();
+        window.onresize = function () {
+            $scope.resize_banner();
+        };
+
+        $(function () {
+            var options = {
+                animateThreshold: 0,
+                scrollPollInterval: 20
+            };
+            $('[data-rw="animate"]').AniView(options);
+        });
 
     });
 
-    bodyApp.controller("footerCtrl",function ($scope,$rootScope) {
+    bodyApp.controller("footerCtrl", function ($scope, $rootScope) {
         console.log("footer controller");
     });
 </script>
